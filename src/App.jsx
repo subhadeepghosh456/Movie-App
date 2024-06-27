@@ -24,29 +24,34 @@ const App = () => {
 
   return (
     <>
-      <div className="fixed z-10 p-2 flex justify-around items-center w-full bg-purple-950">
+      <header className="fixed z-10 p-2 flex justify-around items-center w-full bg-purple-950">
         <div className=""></div>
         <div className="">
           <input
             type="text"
             placeholder="Search here...."
+            aria-label="Search for movies"
             onChange={handleChange}
             className="p-2 rounded-md bg-purple-700 outline-none text-white w-[200px] sm:w-[400px]"
           />
         </div>
-        <div
+        <button
           className="relative flex items-center justify-center cursor-pointer"
           onClick={handleNavigate}
+          aria-label="View favorite movies"
         >
-          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-pink-900 rounded-full px-2 py-1 text-white text-xs">
+          <span
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-pink-900 rounded-full px-2 py-1 text-white text-xs"
+            aria-live="polite"
+          >
             {favList.length}
           </span>
-          <span className="text-pink-500 text-3xl cursor-pointer">
+          <span className="text-pink-500 text-3xl">
             <FaHeart />
           </span>
-        </div>
-      </div>
-      <div className="flex justify-center flex-wrap gap-5 relative top-16">
+        </button>
+      </header>
+      <main className="flex justify-center flex-wrap gap-5 relative top-16">
         {results.length === 0 ? (
           <div className="w-full h-full flex justify-center items-center text-white text-3xl">
             Loading...
@@ -56,7 +61,7 @@ const App = () => {
             return item.poster_path && <Card item={item} key={index} />;
           })
         )}
-      </div>
+      </main>
     </>
   );
 };

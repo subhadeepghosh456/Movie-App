@@ -14,3 +14,8 @@ To Install Dependency->
 To Start the app->
 
 - npm run dev
+
+Improvements->
+
+- could not find any API to implement advanced filtering options for movies, such as filtering by genre, release year range
+- and rating range
