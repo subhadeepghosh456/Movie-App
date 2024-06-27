@@ -11,13 +11,11 @@ const favSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (itemIndex >= 0) {
-        // If the item exists, remove it from the list
         state.splice(itemIndex, 1);
       } else {
-        // If the item does not exist, add it to the list
         state.push(action.payload);
       }
-      // Update localStorage
+
       localStorage.setItem("favList", JSON.stringify(state));
     },
   },
