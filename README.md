@@ -17,5 +17,4 @@ To Start the app->
 
 Improvements->
 
-- could not find any API to implement advanced filtering options for movies, such as filtering by genre, release year range
-- and rating range
+- could not find any API to implement advanced filtering options for movies, such as filtering by genre, release year range and rating range
