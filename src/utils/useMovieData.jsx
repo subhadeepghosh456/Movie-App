@@ -1,12 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { API_KEY, BASE_URL } from "./constant";
-import { debounce } from "./debounce";
+
 import { throttle } from "./throttle";
+import useDebounce from "./useDebounce";
 
 const useMovieData = () => {
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(1);
   const [text, setText] = useState("");
+  const debouncedText = useDebounce(text, 500);
 
   const getMovieData = useCallback(async () => {
     const getAll = await fetch(
@@ -28,24 +30,21 @@ const useMovieData = () => {
     setResults((prev) => [...prev, ...allMovies]);
   }, [page]);
 
-  const getSearchData = useCallback(
-    debounce(async () => {
-      const data = await fetch(
-        `${BASE_URL}/search/movie?query=${text}&include_adult=false&language=en-US&page=${page}&api_key=${API_KEY}`
-      );
-      setPage(page + 1);
-      const response = await data.json();
-      setResults((prev) => [...prev, ...(response?.results || [])]);
-    }, 500),
-    [text, page]
-  );
+  const getSearchData = useCallback(async () => {
+    const data = await fetch(
+      `${BASE_URL}/search/movie?query=${text}&include_adult=false&language=en-US&page=${page}&api_key=${API_KEY}`
+    );
+    setPage(page + 1);
+    const response = await data.json();
+    setResults((prev) => [...prev, ...(response?.results || [])]);
+  }, [text, page]);
 
   useEffect(() => {
     if (!text.length) {
       getMovieData();
     }
     getSearchData();
-  }, [text]);
+  }, [debouncedText]);
 
   const handleScroll = useCallback(
     throttle(() => {
